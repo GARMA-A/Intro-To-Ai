@@ -3,33 +3,34 @@
 #include <map>
 #include <vector>
 #include <stack>
+#include <queue>
 using namespace std;
 
 class graph
 {
-       map<string, list<string>> verteces;
+       map<string, list<string>> vertices;
 
 public:
        void addVertex(string newVertex)
        {
-              this->verteces[newVertex] = list<string>();
+              this->vertices[newVertex] = list<string>();
        }
 
        bool HasThisVertex(string Node)
        {
-              return this->verteces.find(Node) != verteces.end();
+              return this->vertices.find(Node) != vertices.end();
        }
 
        void addEdge(string startNode, string endNode)
        {
               if (HasThisVertex(startNode) && HasThisVertex(endNode))
               {
-                     this->verteces[startNode].push_back(endNode);
+                     this->vertices[startNode].push_back(endNode);
               }
        }
        void PrintGraph()
        {
-              for (auto keyValue : this->verteces)
+              for (auto keyValue : this->vertices)
               {
                      cout << keyValue.first << "->" << "[ ";
                      for (auto listItem : keyValue.second)
@@ -43,7 +44,7 @@ public:
        {
               visited[curNode] = true;
               cout << curNode << " ";
-              for (auto NodesListItems : this->verteces[curNode])
+              for (auto NodesListItems : this->vertices[curNode])
               {
                      if (not visited[NodesListItems])
                      {
@@ -51,24 +52,64 @@ public:
                      }
               }
        }
-       void iterativeDFS(string curNode){
-              map<string,bool>visited;
+       void iterativeDFS(string curNode)
+       {
+              map<string, bool> visited;
               stack<string> st;
               st.push(curNode);
-              while(not st.empty()){
+              while (not st.empty())
+              {
                      string topNode = st.top();
                      st.pop();
-                     if (not visited[topNode]){
-                            visited[topNode] = true;
-                            cout << topNode << " ";
-                     }
-                     for (auto it = this->verteces[topNode].rbegin(); it != this->verteces[topNode].rend();it++){
-                            if(not visited[*it]){
+                     cout << topNode << " ";
+                     for (auto it = this->vertices[topNode].rbegin(); it != this->vertices[topNode].rend(); it++)
+                     {
+                            if (not visited[*it])
+                            {
+                                   visited[topNode] = true;
                                    st.push(*it);
                             }
                      }
               }
-     }
+       }
+
+       void BFS(string start)
+       {
+              map<string, bool> visited;
+              queue<string> q;
+              q.push(start);
+              while (not q.empty())
+              {
+                     string front = q.front();
+                     q.pop();
+                     cout << front << " ";
+                     for (auto it = vertices[front].begin(); it != vertices[front].end(); it++)
+                     {
+                            if (not visited[*it])
+                            {
+                                   visited[front] = true;
+                                   q.push(*it);
+                            }
+                     }
+              }
+       }
+       void RecursiveBFS(queue<string> &q, map<string, bool> &visited)
+       {
+              if (q.empty())
+                     return;
+              string front = q.front();
+              q.pop();
+              cout << front << " ";
+              for (const auto &neighbor : vertices[front])
+              {
+                     if (!visited[neighbor])
+                     {
+                            visited[front] = true;
+                            q.push(neighbor);
+                     }
+              }
+              RecursiveBFS(q, visited);
+       }
 };
 
 signed main()
@@ -94,4 +135,12 @@ signed main()
        g.DFS("A", mp);
        cout << "\n";
        g.iterativeDFS("A");
+       cout << "\n";
+       g.BFS("A");
+       cout << "\n";
+
+       queue<string> q;
+       q.push("A");
+       mp.clear();
+       g.RecursiveBFS(q, mp);
 }
