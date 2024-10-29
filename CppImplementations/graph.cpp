@@ -2,6 +2,7 @@
 #include <list>
 #include <map>
 #include <vector>
+#include <stack>
 using namespace std;
 
 class graph
@@ -50,6 +51,24 @@ public:
                      }
               }
        }
+       void iterativeDFS(string curNode){
+              map<string,bool>visited;
+              stack<string> st;
+              st.push(curNode);
+              while(not st.empty()){
+                     string topNode = st.top();
+                     st.pop();
+                     if (not visited[topNode]){
+                            visited[topNode] = true;
+                            cout << topNode << " ";
+                     }
+                     for (auto it = this->verteces[topNode].rbegin(); it != this->verteces[topNode].rend();it++){
+                            if(not visited[*it]){
+                                   st.push(*it);
+                            }
+                     }
+              }
+     }
 };
 
 signed main()
@@ -73,4 +92,6 @@ signed main()
        g.PrintGraph();
        map<string, bool> mp;
        g.DFS("A", mp);
+       cout << "\n";
+       g.iterativeDFS("A");
 }
