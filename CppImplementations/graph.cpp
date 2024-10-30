@@ -28,7 +28,7 @@ public:
                      this->vertices[startNode].push_back(endNode);
               }
        }
-       void PrintGraph()
+       void printGraph()
        {
               for (auto keyValue : this->vertices)
               {
@@ -122,7 +122,6 @@ signed main()
        g.addVertex("D");
        g.addVertex("E");
        g.addVertex("F");
-
        g.addEdge("A", "B");
        g.addEdge("A", "C");
        g.addEdge("B", "D");
@@ -130,7 +129,7 @@ signed main()
        g.addEdge("A", "F");
        g.addEdge("C", "B");
 
-       g.PrintGraph();
+       g.printGraph();
        map<string, bool> mp;
        g.DFS("A", mp);
        cout << "\n";
