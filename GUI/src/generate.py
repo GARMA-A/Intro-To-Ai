@@ -227,7 +227,6 @@ class MazeGenerator:
                         ticks=pygame.time.get_ticks(),
                         value="9",
                         color=WHITE,
-                        animation=Animation.WEIGHT_ANIMATION
                     )
                 )
 

@@ -411,7 +411,6 @@ class Maze:
                     color=WHITE,
                     colors=[YELLOW, DARK_BLUE_2, BLUE_2, GREEN_2, BLUE],
                     duration=1500,
-                    animation=Animation.PATH_ANIMATION
                 )
             )
 

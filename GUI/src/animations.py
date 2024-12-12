@@ -19,7 +19,6 @@ from .constants import (
 
 
 class Animation(Enum):
-    WALL_ANIMATION = "WALL_ANIMATION"
     WEIGHT_ANIMATION = "WEIGHT_ANIMATION"
     PATH_ANIMATION = "PATH_ANIMATION"
 
@@ -37,7 +36,6 @@ class AnimatingNode:
         color: tuple[int, int, int],
         after_animation: Optional[AnimationCallback] = None,
         colors: list[tuple[int, int, int]] = [],
-        animation: Animation = Animation.WALL_ANIMATION,
         duration: int = 300,
     ) -> None:
         self.rect = rect
@@ -46,7 +44,6 @@ class AnimatingNode:
         self.center = center
         self.color = color
         self.colors = colors
-        self.animation = animation
         self.duration = duration
         self.after_animation = after_animation
         self.progress = 0
@@ -135,12 +132,7 @@ class Animator:
                 continue
 
             # Call respective functions
-            if node.animation == Animation.WALL_ANIMATION:
-                self._wall_animation(node)
-            elif node.animation == Animation.PATH_ANIMATION:
-                self._path_animation(node)
-            else:
-                self._weight_animation(node)
+            self._weight_animation(node)
 
             # Handle node images
             row, col = self.maze.get_cell_pos(node.center)

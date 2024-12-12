@@ -123,7 +123,7 @@ speed_menu = Menu(
         ),
         Button(
             surface=WINDOW,
-            text="Medium",
+                text="Medium",
             x=0,
             y=0,
             background_color=pygame.Color(*DARK_BLUE),
@@ -338,7 +338,6 @@ def main() -> None:
                                             y + CELL_SIZE // 2),
                                     ticks=pygame.time.get_ticks(),
                                     value=str(key % 50 + 2),
-                                    animation=Animation.WEIGHT_ANIMATION,
                                     color=WHITE,
                                     duration=50,
                                 )
@@ -524,19 +523,18 @@ def draw() -> None:
             and not maze.animator.animating:
         state.overlay = True
 
-        if speed_menu.selected:
-            state.speed_label = Label(
+    state.speed_label = Label(
                 surface=WINDOW,
-                text=speed_menu.selected.text,
+                text="Medium",
                 font_size=16,
                 x=speed_btn.rect.x,
                 y=speed_btn.rect.bottom,
                 foreground_color=pygame.Color(*WHITE),
                 background_color=pygame.Color(*BLUE_2),
             )
-            state.speed_label.rect.centerx = speed_btn.rect.centerx
-            maze.set_speed(speed_menu.selected.text)
-            state.overlay = False
+    state.speed_label.rect.centerx = speed_btn.rect.centerx
+    maze.set_speed("Medium")
+    state.overlay = False
 
     if visualise_btn.draw() \
         and not state.label.text.startswith("Choose") \
